@@ -1,12 +1,11 @@
-import './App.css'
 import Container from './container/Container'
-import o from './schema';
+import schema from './schema'
 
 function App() {
 
   return (
     <>
-      <Container config={o} onFinish={(v) => console.log(v)}/>
+      <Container config={schema} onFinish={(v) => console.log(v)}/>
     </>
   )
 }

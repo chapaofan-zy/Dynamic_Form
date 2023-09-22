@@ -3,5 +3,12 @@ import react from '@vitejs/plugin-react-swc'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  build: {
+    lib: {
+      entry: 'src/main.tsx',
+      formats: ['es', 'cjs']
+  }
+  },
   plugins: [react()],
+  
 })
