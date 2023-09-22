@@ -3,12 +3,12 @@ import { useForm } from 'antd/es/form/Form';
 import React from 'react'
 import { IConfig, ISchema, UI } from './interface';
 
-interface Props {
+export interface IContainer {
     config: IConfig;
     onFinish: (v: any) => void;
 }
 
-const Container = ({config}: Props) => {
+const Container = ({config}: IContainer) => {
 
     const [form] = useForm();
 

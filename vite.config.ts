@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react-swc'
 export default defineConfig({
   build: {
     lib: {
-      entry: 'src/main.tsx',
+      entry: 'src/container/Container.tsx',
       formats: ['es', 'cjs']
   }
   },
