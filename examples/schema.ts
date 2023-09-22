@@ -1,7 +1,8 @@
-import { Theme, Types, UI } from "./container/interface";
+import { Theme, Types, UI } from "../src/.";
 
 export default {
     theme: Theme.antd,
+    name: 'form',
     schema: [
         {
             type: Types.string,

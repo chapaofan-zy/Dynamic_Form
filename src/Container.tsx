@@ -1,16 +1,28 @@
 import { Button, ConfigProvider, Form, Input, InputNumber, Radio, Select } from 'antd';
+import { ConfigProviderProps } from 'antd/es/config-provider';
 import { useForm } from 'antd/es/form/Form';
-import React from 'react'
-import { IConfig, ISchema, UI } from './interface';
+import React, { forwardRef, useImperativeHandle } from 'react'
+import { IConfig, ISchema, UI } from '.';
+
 
 export interface IContainer {
     config: IConfig;
-    onFinish: (v: any) => void;
+    global?: ConfigProviderProps;
 }
 
-const Container = ({config}: IContainer) => {
+const Container = forwardRef(({ config, global }: IContainer, ref) => {
 
     const [form] = useForm();
+
+    useImperativeHandle(
+        ref,
+        () => {
+            return {
+                getData: () => form.getFieldsValue()
+            }
+        },
+        [],
+    );
 
     const genComponent = (e: ISchema) => {
         const {ui} = e;
@@ -34,9 +46,11 @@ const Container = ({config}: IContainer) => {
     }
 
     return (
-        <ConfigProvider>
+        <ConfigProvider
+            {...global}
+        >
             <Form
-                name='form'
+                name={config.name}
                 form={form}
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 16 }}
@@ -46,6 +60,7 @@ const Container = ({config}: IContainer) => {
                     console.log(v);
                 }}
                 autoComplete="off"
+                {...config.formProps}
             >
                 {
                     config.schema.map(e => {
@@ -68,6 +83,6 @@ const Container = ({config}: IContainer) => {
             </Form>
         </ConfigProvider>
     );
-}
+});
 
 export default React.memo(Container);

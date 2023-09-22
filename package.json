@@ -1,24 +1,30 @@
 {
     "name": "cpf-dynamic-form",
     "private": false,
-    "version": "0.0.0",
+    "version": "0.0.10",
     "type": "module",
-    "main": "dist/dynamic-form.cjs",
-    "module": "dist/dynamic-form.js",
-    "file": ["dist"],
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        "./*": ["./*", "./*.d.ts"]
+    },
+    "files": [
+        "dist"
+    ],
     "scripts": {
         "dev": "vite",
-        "build": "tsc && vite build",
+        "build": "vite build && tsc",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview"
     },
     "peerDependencies": {
         "antd": "^5.9.2",
-        "less": "^4.2.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"
     },
     "devDependencies": {
+        "@types/node": "^20.6.3",
         "@types/react": "^18.2.15",
         "@types/react-dom": "^18.2.7",
         "@typescript-eslint/eslint-plugin": "^6.0.0",

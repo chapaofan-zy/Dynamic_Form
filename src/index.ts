@@ -1,4 +1,6 @@
-import { Rule } from "rc-field-form/lib/interface";
+import { FormProps, Rule } from "antd/es/form";
+
+import Container from './Container';
 
 type types = object | string | number | null | undefined | boolean;
 
@@ -25,6 +27,8 @@ export enum UI {
 export interface IConfig {
     theme: Theme;
     schema: ISchema[];
+    name: string;
+    formProps?: FormProps;
 }
 
 export interface ISchema {
@@ -41,3 +45,5 @@ export interface Iui {
     theme: Theme;
     options: any;
 }
+
+export default Container;
