@@ -4,9 +4,7 @@ import schema from './schema'
 function App() {
 
   return (
-    <>
       <Container config={schema} onFinish={(v) => console.log(v)}/>
-    </>
   )
 }
 
