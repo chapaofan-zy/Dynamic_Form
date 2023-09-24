@@ -1,18 +1,25 @@
-import { Button, ConfigProvider, Form, Input, InputNumber, Radio, Select } from 'antd';
+import { Button, ConfigProvider, Form, Input, InputNumber, Radio, Select, Slider } from 'antd';
 import { ConfigProviderProps } from 'antd/es/config-provider';
 import { useForm } from 'antd/es/form/Form';
-import React, { forwardRef, useImperativeHandle } from 'react'
-import { IConfig, ISchema, UI } from '.';
+import TextArea from 'antd/es/input/TextArea';
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
+import { IConfig, ISchema, UI } from './interface';
 
 
 export interface IContainer {
     config: IConfig;
     global?: ConfigProviderProps;
+    control?: (v: any) => void;
+    changeKeys?: string[];
 }
 
-const Container = forwardRef(({ config, global }: IContainer, ref) => {
+const Container = forwardRef(({ config, global, control, changeKeys }: IContainer, ref) => {
 
     const [form] = useForm();
+
+    const [cf, setCf] = useState(config);
+
+    const [f, setF] = useState(true);
 
     useImperativeHandle(
         ref,
@@ -23,6 +30,21 @@ const Container = forwardRef(({ config, global }: IContainer, ref) => {
         },
         [],
     );
+
+    useEffect(() => {
+        control && control({
+            getData: (nameList: string[]) => form.getFieldsValue(nameList),
+            setConfig: (name: string, key: string, val: any) => {
+                const tmp = { ...cf }
+                const obj: any = tmp.schema.filter(e => {
+                    return e.name === name;
+                })[0];
+                obj[key] = val;
+                setCf(tmp);
+            }
+        }); 
+
+    }, [f]);
 
     const genComponent = (e: ISchema) => {
         const {ui} = e;
@@ -37,7 +59,13 @@ const Container = forwardRef(({ config, global }: IContainer, ref) => {
                 return (<InputNumber { ...ui.options }/>);
 
             case UI.radio: 
-                return (<Radio.Group options={ui.options}/>)
+                return (<Radio.Group options={ui.options}/>);
+
+            case UI.slider:
+                return (<Slider {...ui.options}/>);
+
+            case UI.textArea:
+                return (<TextArea {...ui.options}/>);
         
             default:
                 return (<></>);
@@ -59,11 +87,14 @@ const Container = forwardRef(({ config, global }: IContainer, ref) => {
                 onFinish={(v) => {
                     console.log(v);
                 }}
+                onValuesChange={(v) => {
+                    if (changeKeys && changeKeys.includes(Object.keys(v)[0])) setF(!f);
+                }}
                 autoComplete="off"
                 {...config.formProps}
             >
                 {
-                    config.schema.map(e => {
+                    cf.schema.map(e => {
                         return (
                             <Form.Item
                                 label={e.title}

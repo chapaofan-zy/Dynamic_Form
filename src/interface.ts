@@ -1,7 +1,5 @@
 import { FormProps, Rule } from "antd/es/form";
 
-import Container from './Container';
-
 type types = object | string | number | null | undefined | boolean;
 
 export enum Types {
@@ -21,7 +19,9 @@ export enum UI {
     'input',
     'select',
     'inputNumber',
-    'radio'
+    'radio',
+    'slider',
+    'textArea'
 }
 
 export interface IConfig {
@@ -46,4 +46,4 @@ export interface Iui {
     options: any;
 }
 
-export default Container;
+// export default Container;

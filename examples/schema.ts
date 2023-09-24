@@ -1,4 +1,4 @@
-import { Theme, Types, UI } from "../src/.";
+import { Theme, Types, UI } from "../src/interface";
 
 export default {
     theme: Theme.antd,
