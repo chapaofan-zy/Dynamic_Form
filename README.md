@@ -1,27 +1,79 @@
-# React + TypeScript + Vite
+## dynamic_form
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+基于antd的可自定义form表单组件
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+```
+npm i cpf-dynamic-form
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+```ts
+export interface IContainer {
+   config: IConfig;
+   // antd全局配置
+   global?: ConfigProviderProps;
+   // 表单联动
+   control?: (v: IControl) => void;
+   changeKeys?: string[];
+}
+
+// 表单联动
+export interface IControl {
+   // 实时获取获取表单对应字段value
+   getData: (nameList: string[]) => void;
+   // 修改config对象schema字段
+   setConfig: (name: string, key: string, val: any) => void;
+}
+
+// 表单结构
+export interface IConfig {
+   // 主题
+   theme: Theme;
+   schema: ISchema[];
+   name: string;
+   // antd Form组件props
+   formProps?: FormProps;
+}
+
+// 单个表单结构
+export interface ISchema {
+   // value类型
+   type: Types;
+   title: string;
+   ui: Iui;
+   // 默认值
+   default?: types | undefined;
+   name: string;
+   // antd form组件校验prop
+   rules?: Rule[];
+}
+
+export interface Iui {
+   // 组件类型
+   type: UI;
+   theme: Theme;
+   // 底层组件props
+   options: any;
+}
+
+export enum Types {
+   'object',
+   'string',
+   'number',
+   'null',
+   'undefined',
+   'boolean'
+}
+
+export enum Theme {
+   'antd'
+}
+
+export enum UI {
+   'input',
+   'select',
+   'inputNumber',
+   'radio',
+   'slider',
+   'textArea'
+}
+```

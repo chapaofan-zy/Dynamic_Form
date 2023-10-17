@@ -9,8 +9,13 @@ import { IConfig, ISchema, UI } from './interface';
 export interface IContainer {
     config: IConfig;
     global?: ConfigProviderProps;
-    control?: (v: any) => void;
+    control?: (v: IControl) => void;
     changeKeys?: string[];
+}
+
+export interface IControl {
+    getData: (nameList: string[]) => void;
+    setConfig: (name: string, key: string, val: any) => void;
 }
 
 const Container = forwardRef(({ config, global, control, changeKeys }: IContainer, ref) => {
